@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<title>Growth Audit — Pingo AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: only light;
+  /* ---- Pingo, extracted from their live screens ---- */
+  --pg-bg:#FFFFFF; --pg-warm:#F9F8F6; --pg-row:#F9F8F6; --pg-input:#F6F5F0; --pg-card:#FFFFFF;
+  --pg-bubble:#F3F0E9; --pg-ububble:#E6F2FE; --pg-circle:#F4F2EF;
+  --pg-blue:#0160FF; --pg-blue-dis:#9AC2FF; --pg-blue-pale:#C7DCF9;
+  --pg-yellow:#F8D940; --pg-pink:#F14C76; --pg-star:#FED100;
+  --pg-ink:#1A1A1C; --pg-txt:#4B4B50; --pg-muted:#8E8E93; --pg-line:#ECEAE6; --pg-apple:#333335;
+  --r-ctl:28px; --r-media:32px;
+  /* ---- the report shell, in Pingo's own palette ---- */
+  --bg:#F9F8F6; --bg2:#FFFFFF; --surf:#FFFFFF;
+  --hair:rgba(26,26,28,.09); --hair2:rgba(26,26,28,.16);
+  --ink:#1A1A1C; --ink2:#4B4B50; --ink3:#8C8C91;
+  --accent:#0160FF; --accent-lift:#0052DB;
+  --panel:#FFFFFF; --panel-ink:#15161A; --panel-muted:#5F6066; --panel-line:#ECEBE8;
+  --accent-ink:#004AC2;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);
+  font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input{font:inherit}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 32px}
+@media(max-width:700px){.wrap{padding:0 20px}}
+
+/* ============ top bar ============ */
+.nav{position:sticky;top:0;z-index:70;background:rgba(249,248,246,.86);backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid var(--hair)}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 32px;height:58px;display:flex;align-items:center;gap:18px}
+@media(max-width:700px){.nav-in{padding:0 16px;gap:12px}}
+.nav-brand{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+.nav-brand .mk{width:30px;height:30px;flex:none;display:grid;place-items:center;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(26,26,28,.1)}
+.nav-brand .mk svg{width:22px;height:11px;display:block}
+.nav-brand span{color:var(--ink2);font-weight:500}
+.nav-brand b{color:var(--ink);font-weight:600}
+.nav-links{margin-left:auto;display:flex;gap:2px;align-items:center}
+.nav-links button{padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--ink3);transition:.16s}
+.nav-links button:hover{color:var(--ink)}
+.nav-links button.on{color:var(--ink);background:#fff;box-shadow:0 1px 4px rgba(26,26,28,.08)}
+@media(max-width:640px){.nav-brand span{display:none}}
+
+.view{display:none}
+.view.on{display:block}
+
+/* ============ hero ============ */
+.hero{padding:104px 0 0;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-340px;left:50%;transform:translateX(-50%);
+  width:1100px;height:640px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(1,96,255,.14),transparent 72%)}
+.hero::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(36% 46% at 8% 22%,rgba(248,217,64,.22),transparent 70%),
+   radial-gradient(36% 44% at 92% 18%,rgba(241,76,118,.16),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-lift);margin-bottom:26px}
+.hero h1{font-size:76px;line-height:.98;font-weight:700;letter-spacing:-.045em;margin:0 0 24px}
+@media(max-width:820px){.hero h1{font-size:50px}.hero{padding-top:70px}}
+.hero .lede{font-size:20px;line-height:1.5;font-weight:400;color:var(--ink2);max-width:600px;margin:0 auto;letter-spacing:-.012em}
+@media(max-width:820px){.hero .lede{font-size:17px}}
+.hero .meta{margin-top:30px;font-size:12.5px;color:var(--ink3);letter-spacing:.02em}
+.hero .meta b{color:var(--ink2);font-weight:600}
+
+.stats{display:flex;justify-content:center;gap:0;margin:70px auto 0;max-width:760px;
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.stat{flex:1;padding:26px 14px;text-align:center;border-left:1px solid var(--hair)}
+.stat:first-child{border-left:none}
+.stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.03em;color:var(--ink)}
+.stat span{display:block;font-size:11.5px;color:var(--ink3);margin-top:5px;line-height:1.35}
+@media(max-width:700px){.stat b{font-size:19px}.stat{padding:18px 8px}}
+
+.fb{max-width:760px;margin:0 auto;padding:30px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:26px;text-align:left}
+@media(max-width:700px){.fb{grid-template-columns:1fr;gap:20px;padding-top:24px}}
+.fb-k{grid-column:1/-1;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink3);text-align:center;margin-bottom:-6px}
+.fb-i{display:flex;gap:12px;align-items:flex-start}
+.fb-i .tick{width:18px;height:18px;flex:none;margin-top:3px;border-radius:50%;background:rgba(1,96,255,.12);
+  display:grid;place-items:center}
+.fb-i .tick svg{width:10px;height:10px;stroke:var(--accent-lift);stroke-width:3;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.fb-i p{font-size:14px;line-height:1.55;color:var(--ink2);margin:0}
+.fb-i p b{color:var(--ink);font-weight:700}
+
+.sec{padding:96px 0}
+.sec-k{font-size:11.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px}
+.sec h2{font-size:38px;line-height:1.14;font-weight:700;letter-spacing:-.035em;margin:0 0 20px;max-width:680px}
+@media(max-width:820px){.sec h2{font-size:29px}.sec{padding:64px 0}}
+.sec p.body{font-size:17px;line-height:1.66;color:var(--ink2);max-width:640px;margin:0 0 18px;letter-spacing:-.008em}
+.sec p.body b{color:var(--ink);font-weight:600}
+.rule{height:1px;background:var(--hair);margin:0}
+
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px;max-width:820px}
+@media(max-width:760px){.notes{grid-template-columns:1fr}}
+.note{background:var(--surf);border:1px solid var(--hair);box-shadow:0 2px 10px rgba(26,26,28,.04);border-radius:16px;padding:24px 26px}
+.note h4{font-size:15px;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+.note p{font-size:14px;line-height:1.6;color:var(--ink2);margin:0}
+
+.ideas{display:flex;flex-direction:column;gap:0;margin-top:14px;border-top:1px solid var(--hair)}
+.idea{display:grid;grid-template-columns:52px 1fr 180px;gap:26px;align-items:start;
+  padding:30px 4px;border-bottom:1px solid var(--hair);text-align:left;width:100%;transition:.18s}
+.idea:hover{background:rgba(255,255,255,.7)}
+@media(max-width:780px){.idea{grid-template-columns:38px 1fr;gap:16px}}
+.idea .no{font-size:13px;font-weight:700;color:var(--ink3);padding-top:4px;letter-spacing:.02em}
+.idea h3{font-size:21px;line-height:1.25;font-weight:700;letter-spacing:-.024em;margin:0 0 7px}
+@media(max-width:820px){.idea h3{font-size:18px}}
+.idea p{font-size:14.5px;line-height:1.6;color:var(--ink2);margin:0;max-width:540px}
+.idea .out{text-align:right;padding-top:3px}
+@media(max-width:780px){.idea .out{grid-column:2;text-align:left;padding-top:12px}}
+.idea .out b{display:block;font-size:19px;font-weight:700;letter-spacing:-.025em;color:var(--accent-lift);white-space:nowrap}
+.idea .out span{display:block;font-size:10.5px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.idea .seeit{display:inline-flex;align-items:center;gap:5px;margin-top:11px;font-size:12.5px;
+  font-weight:600;color:var(--accent-lift)}
+.idea .seeit svg{width:12px;height:12px}
+
+.band{background:var(--surf);border:1px solid var(--hair);border-radius:28px;box-shadow:0 2px 10px rgba(26,26,28,.04);padding:40px 44px;margin-top:44px;
+  display:flex;align-items:center;gap:36px;flex-wrap:wrap}
+@media(max-width:700px){.band{padding:28px 24px;gap:22px}}
+.band .lab{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.band .txt{flex:1;min-width:240px}
+.band .txt p{font-size:15.5px;line-height:1.6;color:var(--ink2);margin:0}
+.band .nums{display:flex;gap:34px}
+.band .nums div b{display:block;font-size:30px;font-weight:700;letter-spacing:-.035em;color:var(--accent-lift)}
+.band .nums div span{display:block;font-size:11px;color:var(--ink3);margin-top:2px;letter-spacing:.04em;
+  text-transform:uppercase;font-weight:600}
+
+.cta-row{display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap;margin-top:52px}
+.bigbtn{display:inline-flex;align-items:center;gap:9px;background:var(--accent);color:#fff;
+  font-size:15px;font-weight:700;letter-spacing:-.01em;padding:15px 26px;border-radius:30px;transition:.16s}
+.bigbtn:hover{filter:brightness(1.1)}
+.bigbtn svg{width:15px;height:15px}
+
+.foot{border-top:1px solid var(--hair);padding:36px 0 70px;font-size:12.5px;line-height:1.6;color:var(--ink3)}
+
+.herobtns{display:flex;justify-content:center;margin-top:30px}
+.ghostbtn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--hair2);color:var(--ink);font-size:14px;
+  font-weight:700;padding:9px 20px 9px 9px;border-radius:30px;box-shadow:0 2px 12px rgba(26,26,28,.06);transition:.16s}
+.ghostbtn:hover{box-shadow:0 4px 18px rgba(26,26,28,.1)}
+.ghostbtn .pl{width:30px;height:30px;border-radius:50%;background:var(--accent);display:grid;place-items:center}
+.ghostbtn .pl svg{width:12px;height:12px;fill:#fff;margin-left:2px}
+
+/* ============ prototype stage ============ */
+.stage{display:grid;grid-template-columns:minmax(440px,1fr) minmax(400px,470px);gap:0;
+  align-items:start;min-height:calc(100vh - 58px)}
+@media(max-width:1080px){.stage{grid-template-columns:1fr}}
+.phonecol{padding:34px 24px 46px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.panelcol{border-left:1px solid var(--hair);background:var(--panel);color:var(--panel-ink);
+  min-height:calc(100vh - 58px);position:sticky;top:58px;max-height:calc(100vh - 58px);overflow-y:auto}
+@media(max-width:1080px){.panelcol{position:static;max-height:none;border-left:none;border-top:1px solid var(--hair)}}
+
+.phone{position:relative;width:390px;height:844px;flex:none;background:#000;border:11px solid #000;
+  border-radius:46px;box-shadow:0 0 0 1.5px #D9D6D1,0 34px 70px -22px rgba(26,26,28,.35)}
+.phone-in{position:absolute;inset:0;border-radius:36px;overflow:hidden;background:var(--pg-bg);color-scheme:only light}
+.island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:104px;height:30px;background:#000;
+  border-radius:16px;z-index:60;pointer-events:none}
+.sbar{position:absolute;top:0;left:0;right:0;height:50px;z-index:55;pointer-events:none;display:flex;
+  align-items:center;justify-content:space-between;padding:14px 28px 0 34px;font:600 15px/1 -apple-system,'Lexend',sans-serif;color:#111;transition:color .3s}
+.sbar.light{color:#fff}
+.sbar .glyphs{display:flex;gap:5px;align-items:center}
+.homebar{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:134px;height:5px;
+  border-radius:3px;background:#111;z-index:56;pointer-events:none;transition:background .3s}
+.homebar.light{background:rgba(255,255,255,.9)}
+.screenwrap{position:absolute;inset:0;overflow:hidden;background:var(--pg-bg)}
+
+/* ============ phone screens — Pingo's system, all prefixed scr-/pg- ============ */
+.scr{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--pg-bg);color:var(--pg-ink);
+  font-family:'Lexend',-apple-system,sans-serif;font-weight:400;
+  transform:translateX(100%);transition:transform .36s cubic-bezier(.32,.72,0,1);z-index:10;will-change:transform}
+.scr.is-active{transform:translateX(0);z-index:20}
+.scr.is-past{transform:translateX(-24%)}
+.scr.sheet{transform:translateY(100%)}
+.scr.sheet.is-active{transform:translateY(0);z-index:30}
+.scr.nofx{transition:none}
+.scr.warm{background:var(--pg-warm)}
+.scr-top{flex:none;padding:54px 18px 0;position:relative;z-index:2}
+.scr-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 18px;scrollbar-width:none;position:relative;z-index:2}
+.scr-body::-webkit-scrollbar{display:none}
+.scr-body.dock{display:flex;flex-direction:column}
+.scr-foot{flex:none;padding:12px 18px 30px;position:relative;z-index:2}
+
+/* header: round grey buttons + their four-bar mark */
+.pg-nav{display:flex;align-items:center;justify-content:space-between;height:44px}
+.pg-circ{width:44px;height:44px;flex:none;border-radius:50%;background:var(--pg-circle);display:grid;place-items:center;color:var(--pg-ink)}
+.pg-circ svg{width:18px;height:18px}
+.pg-circ.q{font:400 19px/1 'Lexend',sans-serif}
+.pg-circ.ghost{visibility:hidden}
+.pg-mark{display:block}
+.pg-nav .pg-mark{width:42px;height:21px}
+.pg-h{font-size:24px;line-height:1.28;font-weight:400;letter-spacing:-.01em;margin:30px 8px 0;text-align:center;color:var(--pg-ink)}
+
+.pg-btn{display:block;width:100%;height:56px;border-radius:28px;background:var(--pg-blue);color:#fff;
+  font:400 17px/1 'Lexend',sans-serif;letter-spacing:.005em;transition:filter .15s,background .2s}
+.pg-btn:hover{filter:brightness(1.06)}
+.pg-btn[disabled]{background:var(--pg-blue-dis);cursor:default;filter:none}
+.pg-link{display:block;width:100%;margin-top:14px;font:400 14px/1.2 'Lexend',sans-serif;color:var(--pg-ink);text-align:center}
+.pg-link.blue{color:var(--pg-blue)}
+.pg-check{font:400 13.5px/1.3 'Lexend',sans-serif;color:var(--pg-ink);text-align:center;margin:0 0 12px;display:flex;align-items:center;justify-content:center;gap:7px}
+.pg-check svg{width:15px;height:15px;stroke:var(--pg-ink);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* welcome */
+.pg-wel{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center}
+.pg-wel .pg-mark{width:116px;height:58px}
+.pg-wel p{font-size:20px;font-weight:400;color:var(--pg-ink);margin-top:120px}
+.pg-next{width:62px;height:62px;border-radius:50%;background:var(--pg-blue);color:#fff;display:grid;place-items:center;margin:0 auto}
+.pg-next svg{width:20px;height:20px}
+.pg-have{font-size:13px;color:var(--pg-ink);text-align:center;margin-top:14px}
+
+/* language list — their flag rows */
+.pg-langs{display:flex;flex-direction:column;gap:10px;margin:28px 0 10px}
+.pg-lrow{display:flex;align-items:center;gap:14px;width:100%;height:58px;padding:0 18px 0 14px;border-radius:20px;background:var(--pg-row);
+  font:400 17px/1 'Lexend',sans-serif;color:var(--pg-ink);text-align:left;transition:.16s}
+.pg-lrow .flag{width:36px;height:36px;flex:none;border-radius:50%;overflow:hidden;display:block}
+.pg-lrow .flag svg{width:36px;height:36px;display:block}
+.pg-lrow .tk{margin-left:auto;width:20px;height:20px;stroke:var(--pg-blue);stroke-width:2.4;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
+.pg-lrow.on{background:var(--pg-card);box-shadow:0 6px 22px rgba(0,0,0,.08)}
+.pg-lrow.on .tk{opacity:1}
+
+/* name */
+.pg-input{display:block;width:100%;height:54px;border-radius:27px;background:var(--pg-input);border:none;outline:none;text-align:center;
+  font:400 16px/1 'Lexend',sans-serif;color:var(--pg-ink);margin-top:30px}
+.pg-input::placeholder{color:#B9B9BD}
+.pg-legal{font-size:11.5px;line-height:1.5;color:var(--pg-muted);text-align:center;margin:16px 10px 0}
+.pg-legal b{color:var(--pg-ink);font-weight:400}
+
+/* chat — their bubbles */
+.pg-chat{display:flex;flex-direction:column;gap:12px;padding:18px 0 14px}
+.pg-bub{max-width:80%;border-radius:22px;padding:14px 16px 12px;font-size:14px;line-height:1.45;color:var(--pg-ink)}
+.pg-bub.new{animation:pop .3s ease both}
+.pg-bub.p{background:var(--pg-bubble);align-self:flex-start}
+.pg-bub.p small{display:block;font-size:11.5px;color:var(--pg-muted);margin-top:10px}
+.pg-bub.u{background:var(--pg-ububble);color:var(--pg-blue);align-self:flex-end;padding:13px 16px}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pg-replies{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-bottom:12px}
+.pg-reply{padding:11px 15px;border-radius:20px;background:var(--pg-ububble);color:var(--pg-blue);font:400 14px/1 'Lexend',sans-serif;border:1.5px dashed rgba(1,96,255,.35)}
+.pg-reply:hover{border-style:solid}
+.pg-bar{display:flex;align-items:center;gap:10px;height:52px;border-radius:26px;background:var(--pg-card);padding:0 8px 0 18px;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.pg-bar span{flex:1;font-size:14px;color:#B4B4B8}
+.pg-bar i{width:34px;height:34px;border-radius:50%;background:var(--pg-blue-dis);display:grid;place-items:center}
+.pg-bar i svg{width:16px;height:16px;stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pg-chat-foot .pg-btn{margin-bottom:0}
+
+/* loader — new, in their mark and bubbles */
+.pg-load{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center}
+.pg-load .pg-mark{width:110px;height:55px}
+.pg-load .pg-mark rect{transform-box:fill-box;transform-origin:center;animation:bounce 1.1s ease-in-out infinite}
+.pg-load .pg-mark :nth-child(2){animation-delay:.12s}.pg-load .pg-mark :nth-child(3){animation-delay:.24s}.pg-load .pg-mark :nth-child(4){animation-delay:.36s}
+@keyframes bounce{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.62)}}
+.pg-load h2{font-size:22px;font-weight:400;line-height:1.3;margin:30px 10px 22px}
+.pg-steps{width:100%;max-width:300px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.pg-ls{display:flex;align-items:center;gap:12px;font-size:14.5px;color:#B4B4B8;transition:.35s}
+.pg-ls.on{color:var(--pg-ink)}
+.pg-ls .d{width:24px;height:24px;flex:none;border-radius:50%;border:2px solid var(--pg-line);display:grid;place-items:center;transition:.35s}
+.pg-ls.on .d{background:var(--pg-blue);border-color:var(--pg-blue)}
+.pg-ls .d svg{width:12px;height:12px;stroke:#fff;stroke-width:3.2;fill:none;opacity:0;stroke-linecap:round;stroke-linejoin:round}
+.pg-ls.on .d svg{opacity:1}
+.pg-quote{width:100%;max-width:310px;background:var(--pg-bubble);border-radius:22px;padding:15px 17px;margin-top:28px;min-height:118px;text-align:left}
+.pg-quote p{font-size:13.5px;line-height:1.5;color:var(--pg-ink)}
+.pg-quote small{display:block;font-size:11.5px;color:var(--pg-muted);margin-top:9px}
+.pg-qd{display:flex;gap:5px;justify-content:center;margin-top:12px}
+.pg-qd i{width:6px;height:6px;border-radius:3px;background:var(--pg-blue-pale);transition:.3s}
+.pg-qd i.on{background:var(--pg-blue);width:18px}
+
+/* plan cards — their carousel */
+.pg-car{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:26px -18px 0;padding:6px 30px 18px;scrollbar-width:none}
+.pg-car::-webkit-scrollbar{display:none}
+.pg-pc{flex:none;width:300px;min-height:390px;scroll-snap-align:center;background:var(--pg-card);border-radius:var(--r-media);box-shadow:0 10px 34px rgba(0,0,0,.07);
+  padding:34px 24px 26px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.pg-pc .ill{height:96px;display:flex;align-items:center;justify-content:center}
+.pg-pc h3{font-size:27px;line-height:1.2;font-weight:400;margin-top:34px;color:var(--pg-ink)}
+.pg-pc p{font-size:14.5px;line-height:1.5;color:var(--pg-txt);margin-top:12px}
+.pg-pc ul{list-style:none;margin-top:16px;width:100%;display:flex;flex-direction:column;gap:7px}
+.pg-pc li{background:var(--pg-row);border-radius:14px;padding:9px 12px;text-align:left;font-size:13px;color:var(--pg-ink)}
+.pg-pc li small{display:block;font-size:10px;color:var(--pg-muted);margin-bottom:1px}
+.pg-dots{display:flex;gap:5px;justify-content:center}
+.pg-dots i{width:7px;height:7px;border-radius:4px;background:var(--pg-blue-pale);transition:.3s;cursor:pointer}
+.pg-dots i.on{width:22px;background:var(--pg-blue)}
+
+/* paywall */
+.pg-pwtop{display:flex;align-items:center;justify-content:space-between;height:44px}
+.pg-restore{font-size:13.5px;color:var(--pg-ink)}
+.pg-payh{font-size:25px;line-height:1.24;font-weight:400;text-align:center;margin:6px 4px 0;color:var(--pg-ink);letter-spacing:-.005em}
+.pg-payh em{font-style:normal;color:var(--pg-blue)}
+.pg-plan{display:block;width:100%;border:3px solid var(--pg-blue);border-radius:24px;overflow:hidden;margin-top:18px;background:var(--pg-card);text-align:left}
+.pg-plan .pg-band{display:block;background:var(--pg-blue);color:#fff;text-align:center;font-size:13px;padding:5px 0 7px}
+.pg-plan .row{display:flex;align-items:center;justify-content:space-between;padding:12px 18px 13px;color:var(--pg-blue)}
+.pg-plan .row b{display:block;font-weight:400;font-size:16px}
+.pg-plan .row small{display:block;font-size:13.5px;margin-top:2px}
+.pg-plan .row span{font-size:15px}
+.pg-remind{display:flex;align-items:center;gap:12px;margin-top:12px;background:var(--pg-row);border-radius:18px;padding:10px 14px}
+.pg-remind svg{width:30px;height:30px;flex:none}
+.pg-remind p{font-size:13px;line-height:1.35;color:var(--pg-ink)}
+.pg-remind p em{font-style:normal;color:var(--pg-blue)}
+.pg-feats{display:flex;flex-direction:column;gap:9px;margin-top:16px;padding:0 4px}
+.pg-f{display:flex;align-items:center;gap:13px;font-size:13.5px;line-height:1.3;color:var(--pg-ink)}
+.pg-f svg{width:28px;height:28px;flex:none}
+.pg-proof{display:flex;align-items:center;gap:12px;margin-top:16px;padding:0 2px}
+.pg-rate{flex:none;display:flex;align-items:center;gap:4px}
+.pg-rate .lau{width:16px;height:40px}
+.pg-rate .c{text-align:center}
+.pg-rate .c b{display:block;font-weight:500;font-size:13px}
+.pg-rate .c .st{display:block;color:var(--pg-star);font-size:12px;letter-spacing:1px;line-height:1.2}
+.pg-rate .c small{display:block;font-size:11px;color:var(--pg-ink)}
+.pg-q{font-size:12.5px;line-height:1.42;color:var(--pg-ink)}
+.pg-q small{display:block;color:var(--pg-muted);font-size:11px;margin-top:3px}
+
+/* choose a plan — their screen */
+.pg-sec{display:flex;align-items:center;gap:12px;margin:22px 0 12px;font-size:14.5px;color:var(--pg-ink)}
+.pg-sec::before,.pg-sec::after{content:'';flex:1;height:1px;background:var(--pg-line)}
+.pg-cp{display:block;width:100%;border:3px solid var(--pg-ink);border-radius:24px;overflow:hidden;background:var(--pg-card);text-align:left;color:var(--pg-ink)}
+.pg-cp .pg-band{display:block;background:var(--pg-ink);color:#fff;text-align:center;font-size:13.5px;padding:5px 0 7px}
+.pg-cp .row{display:flex;align-items:center;justify-content:space-between;padding:16px 18px}
+.pg-cp .row b{display:block;font-weight:400;font-size:16px}
+.pg-cp .row small{display:block;font-size:13.5px;margin-top:3px}
+.pg-cp.on{border-color:var(--pg-blue);color:var(--pg-blue)}
+.pg-cp.on .pg-band{background:var(--pg-blue)}
+
+/* offer — direct, one month, comparison-led */
+.pg-oh{font-size:27px;line-height:1.22;font-weight:400;text-align:center;margin:10px 6px 0;color:var(--pg-ink)}
+.pg-oh em{font-style:normal;color:var(--pg-blue)}
+.pg-osub{font-size:14.5px;line-height:1.45;color:var(--pg-txt);text-align:center;margin-top:10px}
+.pg-cmp{margin-top:18px;border-radius:22px;background:var(--pg-row);padding:6px 16px}
+.pg-cmp .r{display:grid;grid-template-columns:1fr 92px 92px;gap:6px;padding:11px 0;border-top:1px solid var(--pg-line);font-size:13px;align-items:center}
+.pg-cmp .r:first-child{border-top:none}
+.pg-cmp .r span{color:var(--pg-txt)}
+.pg-cmp .r b{font-weight:400;text-align:center;color:var(--pg-ink)}
+.pg-cmp .r b.hi{color:var(--pg-blue)}
+.pg-cmp .h b{font-size:12px;color:var(--pg-muted)}
+.pg-cmp .h b.hi{color:var(--pg-blue);font-weight:500}
+
+/* account */
+.pg-acc-h{font-size:28px;font-weight:400;text-align:center;color:var(--pg-ink)}
+.pg-acc-s{font-size:14.5px;line-height:1.45;color:var(--pg-txt);text-align:center;margin:10px 16px 0}
+.pg-sso{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;height:64px;border-radius:32px;background:var(--pg-card);
+  font:400 17px/1 'Lexend',sans-serif;color:var(--pg-ink);box-shadow:0 6px 22px rgba(0,0,0,.07);margin-top:28px}
+.pg-sso + .pg-sso{margin-top:14px}
+.pg-sso svg{width:26px;height:26px}
+.pg-sso.apple{background:var(--pg-apple);color:#fff}
+
+/* home */
+.pg-hhead{background:var(--pg-warm);border-radius:0 0 50% 50% / 0 0 26px 26px;padding:54px 18px 22px;display:flex;align-items:center;justify-content:space-between}
+.pg-pill{display:flex;align-items:center;gap:8px;height:38px;border-radius:19px;background:var(--pg-circle);padding:0 12px 0 5px;font-size:13px}
+.pg-pill .flag{width:28px;height:28px;border-radius:50%;overflow:hidden;display:block}
+.pg-pill .flag svg{width:28px;height:28px;display:block}
+.pg-pill.fl{padding:0 5px 0 12px}
+.pg-pill .fire{width:28px;height:28px;border-radius:50%;background:var(--pg-star);display:grid;place-items:center}
+.pg-prog{font-size:13px;color:var(--pg-blue);text-align:center;line-height:1.2}
+.pg-hmain{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center}
+.pg-hmain .pg-mark{width:110px;height:55px}
+.pg-hmain small{font-size:12.5px;color:var(--pg-txt);margin-top:36px}
+.pg-hmain h2{font-size:26px;font-weight:400;margin-top:6px}
+.pg-start{height:52px;padding:0 34px;border-radius:26px;background:var(--pg-blue);color:#fff;font:400 16px/1 'Lexend',sans-serif;margin-top:22px}
+.pg-hfoot{background:var(--pg-warm);border-radius:50% 50% 0 0 / 26px 26px 0 0;padding:20px 0 36px;text-align:center;font-size:13px;color:var(--pg-blue)}
+
+/* dark mode — an approximation: no dark frames were supplied */
+.phone-in.dark{--pg-bg:#111214;--pg-warm:#17181B;--pg-row:#1F2024;--pg-input:#1F2024;--pg-card:#24252A;--pg-bubble:#26272C;--pg-ububble:#0F2A55;
+  --pg-circle:#24252A;--pg-ink:#F2F2F4;--pg-txt:#B4B5BB;--pg-muted:#7E7F86;--pg-line:#2F3035;--pg-blue-dis:#26406B;--pg-blue-pale:#2B3E61;--pg-apple:#F2F2F4;background:var(--pg-bg)}
+.phone-in.dark .screenwrap{background:var(--pg-bg)}
+.phone-in.dark .pg-sso.apple{color:#111}
+.phone-in.dark .pg-sso.apple path{fill:#111}
+.phone-in.dark .pg-lrow.on,.phone-in.dark .pg-pc,.phone-in.dark .pg-sso,.phone-in.dark .pg-bar{box-shadow:0 6px 22px rgba(0,0,0,.35)}
+.phone-in.dark .pg-reply{border-color:rgba(120,165,255,.4);color:#7FAEFF}
+.phone-in.dark .pg-bub.u{color:#8FB8FF}
+.phone-in.dark .pg-bar i{background:#26406B}
+.phone-in.dark .pg-cp:not(.on){border-color:#55565C}
+.phone-in.dark .pg-cp:not(.on) .pg-band{background:#55565C}
+.phone-in.dark .lau path{stroke:var(--pg-ink)}
+
+/* prototype toolbar, walkthrough, QR */
+.tools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:520px}
+.seg{display:inline-flex;align-items:center;background:#fff;border:1px solid #E4E2DE;border-radius:20px;padding:3px;gap:2px}
+.seg button{padding:6px 11px;border-radius:16px;font:600 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);transition:.14s}
+.seg button.on{background:var(--ink);color:#fff}
+.demo-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border-radius:20px;background:var(--accent);color:#fff;
+  font:700 12px/1 'Plus Jakarta Sans',sans-serif}
+.demo-cap{width:390px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--hair);border-radius:16px;padding:14px 14px 12px;
+  display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;box-shadow:0 4px 18px rgba(26,26,28,.07)}
+.demo-cap .bar{position:absolute;left:0;top:0;right:0;height:3px;background:#EFEDEA}
+.demo-cap .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s linear}
+.demo-cap p{flex:1;font-size:13.5px;line-height:1.45;color:var(--ink);margin:0;font-weight:500}
+.demo-cap button{font:700 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);padding:7px 10px;border-radius:12px;border:1px solid #E4E2DE;flex:none}
+.finger{position:absolute;z-index:90;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:rgba(26,26,28,.26);
+  border:2px solid rgba(255,255,255,.95);box-shadow:0 4px 14px rgba(0,0,0,.25);pointer-events:none;opacity:0;left:50%;top:60%;
+  transition:left .32s cubic-bezier(.4,0,.2,1),top .32s cubic-bezier(.4,0,.2,1),opacity .2s,transform .15s}
+.finger.show{opacity:1}
+.finger.press{transform:scale(.78);background:rgba(26,26,28,.4)}
+.qr{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--hair);border-radius:16px;padding:10px 16px 10px 10px;text-align:left}
+.qr img{width:123px;height:123px;display:block;image-rendering:pixelated;border-radius:6px}
+.qr span{font-size:12.5px;line-height:1.45;color:var(--ink2)}
+.qr b{display:block;color:var(--ink);font-size:13.5px}
+@media(max-width:1080px){.qr{display:none}}
+
+#view-proto .tools{order:0} #view-proto .demo-cap{order:1} #view-proto .phone{order:2} #view-proto .chips{order:3}
+#view-proto .chiphint{order:4} #view-proto .qr{order:5}
+.cta-row .qr{order:2}
+/* on a phone: the prototype is the screen */
+@media(max-width:500px){
+  #view-proto .phonecol{padding:0 0 28px;gap:14px}
+  #view-proto .phone{width:100vw;height:calc(100svh - 58px);min-height:620px;border:0;border-radius:0;box-shadow:none;order:1}
+  #view-proto .phone-in{border-radius:0}
+  #view-proto .island,#view-proto .sbar,#view-proto .homebar{display:none}
+  #view-proto .scr-top{padding-top:14px}
+  #view-proto .scr-foot{padding-bottom:18px}
+  #view-proto .pg-hhead{padding-top:14px}
+  #view-proto .pg-hfoot{padding-bottom:18px}
+  #view-proto .tools{order:3;padding:0 12px}
+  #view-proto .demo-cap{position:fixed;left:12px;right:12px;bottom:12px;width:auto;max-width:none;z-index:95}
+  #view-proto .chips{order:4;padding:0 12px}
+  #view-proto .chiphint{order:5}
+}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:470px;margin:0 auto}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid #E4E2DE;background:#fff;
+  font:600 12px/1 'Plus Jakarta Sans',sans-serif;color:var(--ink2);transition:.14s}
+.chip:hover{color:var(--ink);border-color:#CFCCC6}
+.chip.offer{border-style:dashed;border-color:var(--accent);color:var(--accent-lift)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;border-style:solid}
+.chiphint{text-align:center;font-size:11px;color:var(--ink3);margin:0;max-width:430px}
+
+/* ============ the short panel ============ */
+.pn{padding:30px 30px 60px}
+.pn-n{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+.pn-n.ctx{color:var(--panel-muted)}
+.pn-t{font-size:23px;line-height:1.18;font-weight:700;letter-spacing:-.028em;margin:8px 0 0;color:var(--panel-ink)}
+.pn-hyp{font-size:15px;line-height:1.62;color:#2E3036;margin:16px 0 0}
+.pn-hyp b{font-weight:700;color:var(--panel-ink)}
+.pn-out{margin-top:22px;border-top:1px solid var(--panel-line);padding-top:18px}
+.pn-out .lab{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--panel-muted)}
+.pn-out .v{font-size:31px;font-weight:700;letter-spacing:-.035em;color:var(--accent-ink);margin-top:7px;line-height:1}
+.pn-kept{margin-top:22px;font-size:12.5px;line-height:1.55;color:var(--panel-muted)}
+.pn-kept b{color:#2E3036;font-weight:700}
+.pn-foot{font-size:11.5px;line-height:1.55;color:var(--panel-muted);border-top:1px solid var(--panel-line);
+  padding-top:14px;margin-top:26px}
+.pn-sep{height:1px;background:var(--panel-line);margin:26px 0}
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-in">
+    <div class="nav-brand">
+      <span class="mk"><svg class="pg-mark" viewBox="0 0 100 50" aria-label="Pingo"></svg></span>
+      <b>Growth Audit</b><span>· Pingo AI</span>
+    </div>
+    <div class="nav-links">
+      <button class="on" data-view="over">Overview</button>
+      <button data-view="proto">Prototype</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======================= OVERVIEW ======================= -->
+<div class="view on" id="view-over">
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Growth Audit · November 2026</div>
+    <h1>Pingo AI</h1>
+    <p class="lede">Five ideas to unlock more revenue from the traffic you already have.</p>
+    <div class="meta">Prepared by <b>Adapty</b> · based on your live iOS flow and your App Store listing</div>
+    <div class="herobtns"><button class="ghostbtn" data-demo><span class="pl"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span>Watch the 30-second walkthrough</button></div>
+    <div class="stats">
+      <div class="stat"><b>30,000+</b><span>apps run subscriptions<br>on Adapty</span></div>
+      <div class="stat"><b>5</b><span>ideas, each rebuilt<br>as a working screen</span></div>
+      <div class="stat"><b>0</b><span>design changes<br>to your art direction</span></div>
+    </div>
+
+    <div class="fb">
+      <div class="fb-k">Built in Adapty Flow Builder</div>
+      <div class="fb-i">
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <p><b>Millions of dollars</b> in subscription revenue pass through Flow Builder every month.</p>
+      </div>
+      <div class="fb-i">
+        <span class="tick"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <p><b>Nearly 500 apps</b> actively build their paywalls and onboarding in it — plenty of them past $100K MRR.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">What this is</div>
+    <h2>We opened Pingo the way a new learner does, then rebuilt the parts we think are leaving money on the table.</h2>
+    <p class="body">Adapty powers subscriptions for <b>30,000+ apps</b>, so we get to see what actually moves conversion and ARPU across the market rather than inside one app. We pointed that at Pingo: installed it, talked to Pingo through the first conversation, read your App Store listing and your website, and looked for gaps between what you already have and what you currently show people.</p>
+    <p class="body">What follows is five ideas — not fifteen. Each one is a hypothesis you can A/B test, and each one is built into a clickable prototype so you can see it rather than imagine it. <b>The prototype uses your design, not ours.</b></p>
+
+    <div class="notes">
+      <div class="note">
+        <h4>We did not redesign your app</h4>
+        <p>Every screen in the prototype is yours — your four-bar mark, your flag rows, Pingo’s chat bubbles, your plan card with the blue “7 days free” band, your Choose a plan screen. Only the order changed, plus a few things you already own but do not show at the right moment. This is not a design pitch.</p>
+      </div>
+      <div class="note">
+        <h4>You may have tested some of this</h4>
+        <p>We are working from the outside, so we cannot see your experiment history. If one of these is something you have already run, tell us — we will go deeper on the rest rather than repeat it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<div class="sec">
+  <div class="wrap">
+    <div class="sec-k">The five ideas</div>
+    <h2>Ranked by what we would test first.</h2>
+    <p class="body">Each one links straight to the screen in the prototype.</p>
+
+    <div class="ideas">
+      <button class="idea" data-jump="offer">
+        <span class="no">01</span>
+        <span>
+          <h3>Offer one month when they close the paywall</h3>
+          <p>Today the X on your paywall drops people straight onto the home screen. You already sell a 17,99 € month with no trial, but it only appears behind View All Plans. Show it once, to the people who just said no to a year.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>ARPU +10–15%</b><span>second chance</span></span>
+      </button>
+
+      <button class="idea" data-jump="account">
+        <span class="no">02</span>
+        <span>
+          <h3>Ask for an account after the paywall</h3>
+          <p>Right now “Create an account” with Google or Apple sits between your “Start with the basics” plan and the paywall. Someone who just had their first conversation with Pingo hits a sign-in wall before they have seen a price.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +8% · ARPU +17%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="paywall">
+        <span class="no">03</span>
+        <span>
+          <h3>Put their goal in the paywall headline</h3>
+          <p>Pingo asks their name, their language and what they want to do with it. Then the paywall says “Learn to speak a new language with Pingo” to everyone. It could say “Sam, learn to talk better in Spanish”.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +15–20%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="paywall">
+        <span class="no">04</span>
+        <span>
+          <h3>Show the price and your 4.8 on the first screen</h3>
+          <p>Your paywall is three screens in a row: features, then the trial reminder, then the price. The 89,99 € plan, “8 million learners” and your 4.8 from 92k+ reviews only appear on the third. Put all of it on the first.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +10–15%</b><span>to purchase</span></span>
+      </button>
+
+      <button class="idea" data-jump="loader">
+        <span class="no">05</span>
+        <span>
+          <h3>Let the loader read their answers back</h3>
+          <p>Before the paywall a grey skeleton loads for a moment. Use it to say what Pingo heard (Spanish, talk better, already knows greetings and numbers) and build a three-card plan from it, ending on their first chapter.</p>
+          <span class="seeit">See the screen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
+        <span class="out"><b>CR +10–15%</b><span>to purchase</span></span>
+      </button>
+    </div>
+
+    <div class="band">
+      <div class="txt">
+        <div class="lab">Potential outcome</div>
+        <p>Run together, these five work on the same few seconds: the stretch between Pingo’s first conversation and the moment someone decides. Clear the sign-in out of it, show the price with their own goal on it, and give a second chance when they say no.</p>
+      </div>
+      <div class="nums">
+        <div><b>+25%</b><span>CR to purchase</span></div>
+        <div><b>+30%</b><span>ARPU</span></div>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <div class="qr"><img src="img/qr.svg" alt="QR code for the prototype"><span><b>Or open it on your phone</b>Scan to try the flow in your hand.</span></div>
+      <button class="bigbtn" data-view="proto">Open the prototype
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <div class="wrap">
+    Impact ranges are Adapty's expected effect from teardowns and A/B tests across subscription apps — not measured lift for Pingo AI. Every price, rating, quote and feature line here and in the prototype comes from Pingo’s own App Store listing, website and in-app screens.
+  </div>
+</div>
+</div><!-- /view-over -->
+
+<!-- ======================= PROTOTYPE ======================= -->
+<div class="view" id="view-proto">
+<div class="stage">
+  <div class="phonecol">
+    <div class="tools" id="tools">
+      <div class="seg" id="segTheme"><button data-theme="light" class="on">Light</button><button data-theme="dark">Dark</button></div>
+      <button class="demo-btn" id="demoBtn"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M7 4.5v15l12-7.5z"/></svg>30-sec walkthrough</button>
+    </div>
+    <div class="phone">
+      <div class="phone-in" id="phoneIn">
+        <div class="island"></div>
+        <div class="sbar" id="sbar">
+          <span>9:41</span>
+          <span class="glyphs">
+            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.5" width="3" height="3.5" rx="1"/><rect x="4.5" y="5.5" width="3" height="5.5" rx="1"/><rect x="9" y="3" width="3" height="8" rx="1"/><rect x="13.5" y="0" width="3" height="11" rx="1"/></svg>
+            <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><path d="M8 10.5 5.6 7.9a3.4 3.4 0 0 1 4.8 0L8 10.5Zm0-5.6a6.4 6.4 0 0 0-4.5 1.9L1.7 4.9a9 9 0 0 1 12.6 0l-1.8 1.9A6.4 6.4 0 0 0 8 4.9Z"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".6" y=".6" width="20" height="10.8" rx="3" stroke="currentColor" stroke-opacity=".5"/><rect x="2.2" y="2.2" width="16.5" height="7.6" rx="1.8" fill="currentColor"/><path d="M22.3 4.1v3.8a2 2 0 0 0 0-3.8Z" fill="currentColor" fill-opacity=".5"/></svg>
+          </span>
+        </div>
+        <div class="homebar" id="homebar"></div>
+        <div class="finger" id="finger"></div>
+        <div class="screenwrap">
+
+<!-- WELCOME -->
+<section class="scr" data-id="welcome">
+  <div class="scr-top"></div>
+  <div class="scr-body"><div class="pg-wel"><svg class="pg-mark" viewBox="0 0 100 50"></svg><p>Your new language BFF</p></div></div>
+  <div class="scr-foot">
+    <button class="pg-next" id="welNext" data-go="lang" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <p class="pg-have">Already have an account?</p>
+  </div>
+</section>
+
+<!-- LANGUAGE -->
+<section class="scr" data-id="lang">
+  <div class="scr-top">
+    <div class="pg-nav">
+      <button class="pg-circ" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <svg class="pg-mark" viewBox="0 0 100 50"></svg>
+      <span class="pg-circ ghost"></span>
+    </div>
+    <h2 class="pg-h" style="margin-top:22px">Which language do<br>you want to learn?</h2>
+  </div>
+  <div class="scr-body"><div class="pg-langs" id="langList"></div></div>
+  <div class="scr-foot"><button class="pg-btn" data-go="name">Continue</button></div>
+</section>
+
+<!-- NAME -->
+<section class="scr" data-id="name">
+  <div class="scr-top">
+    <div class="pg-nav">
+      <button class="pg-circ q" data-back>?</button>
+      <svg class="pg-mark" viewBox="0 0 100 50"></svg>
+      <button class="pg-circ" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+  <div class="scr-body">
+    <h2 class="pg-h" style="margin-top:70px">What’s your name?</h2>
+    <input class="pg-input" id="nameIn" placeholder="Name" maxlength="18" autocomplete="off">
+    <button class="pg-btn" id="nameBtn" style="margin-top:14px" data-go="chat">Continue</button>
+    <p class="pg-legal">Pingo shares your messages and voice with third-party AI services to power your conversations.</p>
+    <p class="pg-legal" style="margin-top:8px">By continuing, you agree to Pingo’s <b>Terms of Service</b> and <b>Privacy Policy</b>.</p>
+  </div>
+  <div class="scr-foot"></div>
+</section>
+
+<!-- CHAT -->
+<section class="scr" data-id="chat">
+  <div class="scr-top">
+    <div class="pg-nav">
+      <button class="pg-circ q" data-back>?</button>
+      <svg class="pg-mark" viewBox="0 0 100 50"></svg>
+      <button class="pg-circ" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+  <div class="scr-body" id="chatBody"><div class="pg-chat" id="chatLog"></div></div>
+  <div class="scr-foot pg-chat-foot">
+    <div class="pg-replies" id="chatReplies"></div>
+    <div class="pg-bar" id="chatBar"><span>Talk to Pingo…</span><i><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></i></div>
+    <button class="pg-btn hidden" id="chatBtn" data-go="loader">Continue</button>
+  </div>
+</section>
+
+<!-- LOADER -->
+<section class="scr" data-id="loader">
+  <div class="scr-top"></div>
+  <div class="scr-body">
+    <div class="pg-load">
+      <svg class="pg-mark" viewBox="0 0 100 50"></svg>
+      <h2 id="loadH"></h2>
+      <div class="pg-steps" id="loadSteps">
+        <div class="pg-ls"><span class="d"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+        <div class="pg-ls"><span class="d"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+        <div class="pg-ls"><span class="d"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><span class="t"></span></div>
+      </div>
+      <div class="pg-quote"><p id="qText"></p><small id="qWho"></small></div>
+      <div class="pg-qd" id="qDots"><i class="on"></i><i></i><i></i></div>
+    </div>
+  </div>
+  <div class="scr-foot"></div>
+</section>
+
+<!-- PLAN -->
+<section class="scr warm" data-id="plan">
+  <div class="scr-top">
+    <div class="pg-nav">
+      <button class="pg-circ" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <svg class="pg-mark" viewBox="0 0 100 50"></svg>
+      <span class="pg-circ ghost"></span>
+    </div>
+  </div>
+  <div class="scr-body dock">
+    <div class="pg-car" id="car">
+      <div class="pg-pc">
+        <div class="ill"><svg width="64" height="56" viewBox="0 0 64 56"><circle cx="8" cy="8" r="7" fill="#0160FF"/><rect x="20" y="2" width="42" height="12" rx="6" fill="#ECE8E1"/><circle cx="8" cy="28" r="7" fill="#F14C76"/><rect x="20" y="22" width="42" height="12" rx="6" fill="#ECE8E1"/><circle cx="8" cy="48" r="7" fill="#F8D940"/><rect x="20" y="42" width="22" height="12" rx="6" fill="#ECE8E1"/></svg></div>
+        <h3 id="pc1h"></h3><p id="pc1p"></p>
+      </div>
+      <div class="pg-pc">
+        <div class="ill"><svg width="70" height="70" viewBox="0 0 70 70"><path d="M8 52c10-26 34-26 54-38" stroke="#ECE8E1" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="12" cy="52" r="7" fill="#F8D940"/><circle cx="35" cy="34" r="7" fill="#F14C76"/><circle cx="60" cy="16" r="8" fill="#0160FF"/></svg></div>
+        <h3 id="pc2h"></h3><p id="pc2p"></p>
+      </div>
+      <div class="pg-pc">
+        <div class="ill"><svg width="72" height="64" viewBox="0 0 72 64"><path d="M14 58 30 12l28 30Z" fill="#F4F1EC"/><path d="M40 6c6 2 8 8 5 14M50 22c6-6 14-4 16 2M44 30c4 4 4 10 0 14" stroke="#0160FF" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="56" cy="8" r="4" fill="#F14C76"/><circle cx="64" cy="40" r="3.5" fill="#F8D940"/><path d="M36 18c-4-6 0-12 6-12" stroke="#F8D940" stroke-width="4.5" stroke-linecap="round" fill="none"/></svg></div>
+        <h3 style="margin-top:20px">Meet someone new</h3><p>Your first chapter, built around your answers.</p>
+        <ul>
+          <li><small>Objective</small>Start with a greeting</li>
+          <li><small>Objective</small>Share your name</li>
+          <li><small>Objective</small>Ask their name</li>
+          <li><small>Objective</small>Talk about where you’re from</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pg-dots" id="carDots" style="margin-top:auto;margin-bottom:6px"><i class="on"></i><i></i><i></i></div>
+  </div>
+  <div class="scr-foot"><button class="pg-btn" data-go="paywall">Start learning</button></div>
+</section>
+
+<!-- PAYWALL -->
+<section class="scr" data-id="paywall">
+  <div class="scr-top">
+    <div class="pg-pwtop">
+      <button class="pg-circ" id="payClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <span class="pg-restore">Restore</span>
+    </div>
+  </div>
+  <div class="scr-body">
+    <h2 class="pg-payh" id="payH"></h2>
+    <button class="pg-plan" id="payPlan">
+      <span class="pg-band">7 days free</span>
+      <span class="row"><span><b>Pingo Pro</b><small>12 mo · 89,99 €</small></span><span>7,49 €/mo</span></span>
+    </button>
+    <div class="pg-remind">
+      <svg viewBox="0 0 60 60"><path d="M18 40V26a12 12 0 0 1 24 0v14" stroke="#ECE8E1" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M10 42l40 4" stroke="#0160FF" stroke-width="5" stroke-linecap="round"/><path d="M26 47a5 5 0 0 0 9 1" fill="#F8D940" stroke="#F8D940" stroke-width="3"/><circle cx="41" cy="17" r="6" fill="#F14C76"/></svg>
+      <p>We’ll remind you <em>2 days</em> before your trial ends</p>
+    </div>
+    <div class="pg-feats">
+      <div class="pg-f"><svg viewBox="0 0 30 30"><circle cx="9" cy="10" r="4.5" fill="#ECE8E1"/><path d="M2 26c0-6 3-9 7-9s7 3 7 9" fill="#ECE8E1"/><path d="M19 9c2 2 2 6 0 8M22.5 6.5c3.5 3.5 3.5 9.5 0 13" stroke="#0160FF" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M26 4c4.5 5 4.5 13 0 18" stroke="#F8D940" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg><span>Unlimited speaking practice with instant feedback</span></div>
+      <div class="pg-f"><svg viewBox="0 0 30 30"><path d="M4 22c0-6 22-2 22-10" stroke="#ECE8E1" stroke-width="3.5" fill="none" stroke-linecap="round"/><circle cx="25" cy="6" r="2.6" fill="#0160FF"/><circle cx="14" cy="16" r="2.4" fill="#F14C76"/><circle cx="4" cy="23" r="2.6" fill="#F8D940"/></svg><span>Personalized learning plan built around your goals</span></div>
+      <div class="pg-f"><svg viewBox="0 0 30 30"><path d="M3 22a12 12 0 0 1 24 0Z" fill="#F4F1EC"/><path d="M15 21l6-12" stroke="#0160FF" stroke-width="2.6" stroke-linecap="round"/><path d="M15 21l4-9" stroke="#F14C76" stroke-width="2.2" stroke-linecap="round"/><path d="M6 12l2 2M24 12l-2 2M15 7v2" stroke="#F8D940" stroke-width="2" stroke-linecap="round"/></svg><span>Adaptive pacing to help you learn faster</span></div>
+      <div class="pg-f"><svg viewBox="0 0 30 30"><rect x="2" y="9" width="26" height="18" rx="4" fill="#F4F1EC"/><rect x="7" y="18" width="4" height="6" rx="2" fill="#0160FF"/><rect x="13" y="14" width="4" height="10" rx="2" fill="#F14C76"/><rect x="19" y="10" width="4" height="14" rx="2" fill="#F8D940"/></svg><span>Progress that builds on each conversation</span></div>
+    </div>
+    <div class="pg-proof">
+      <div class="pg-rate">
+        <svg class="lau" viewBox="0 0 16 40"><path d="M12 38C3 30 2 16 9 4M9 10l-5-3M7 17l-5-1M6 24l-5 1M7 31l-4 3" stroke="#1A1A1C" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+        <span class="c"><b>4.8 rating</b><span class="st">★★★★★</span><small>92k+ reviews</small></span>
+        <svg class="lau" viewBox="0 0 16 40" style="transform:scaleX(-1)"><path d="M12 38C3 30 2 16 9 4M9 10l-5-3M7 17l-5-1M6 24l-5 1M7 31l-4 3" stroke="#1A1A1C" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <p class="pg-q">“This app improved my Korean speaking more in one week than a year of tutoring.”<small>—User from California, USA</small></p>
+    </div>
+    <div style="height:8px"></div>
+  </div>
+  <div class="scr-foot">
+    <p class="pg-check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 6"/></svg>No payment due now</p>
+    <button class="pg-btn" id="payCta">Start My Free Week</button>
+    <button class="pg-link" data-go="plans">View All Plans</button>
+  </div>
+</section>
+
+<!-- CHOOSE A PLAN -->
+<section class="scr" data-id="plans">
+  <div class="scr-top">
+    <div class="pg-pwtop">
+      <button class="pg-circ" data-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <span class="pg-restore">Restore</span>
+    </div>
+    <h2 class="pg-h" style="margin-top:34px;font-size:28px">Choose a plan</h2>
+  </div>
+  <div class="scr-body">
+    <div class="pg-sec">7-day Free Trial</div>
+    <button class="pg-cp" data-plan="year"><span class="pg-band">Most Popular</span><span class="row"><span><b>12 Months</b><small>89,99 €</small></span><span>7,49 €</span></span></button>
+    <div class="pg-sec" style="margin-top:30px">No Free Trial</div>
+    <button class="pg-cp" data-plan="month"><span class="row"><span><b>1 month</b></span><span>17,99 €</span></span></button>
+  </div>
+  <div class="scr-foot">
+    <p class="pg-check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 6"/></svg>No commitment, cancel any time</p>
+    <button class="pg-btn" id="plansCta"></button>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section class="scr sheet" data-id="offer">
+  <div class="scr-top">
+    <div class="pg-pwtop">
+      <button class="pg-circ" id="offClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <span class="pg-restore">Restore</span>
+    </div>
+  </div>
+  <div class="scr-body">
+    <h2 class="pg-oh" id="offH"></h2>
+    <p class="pg-osub">Take one month of Pingo Pro instead. No trial, no year — just one month.</p>
+    <div class="pg-sec" style="margin-top:22px">No Free Trial</div>
+    <div class="pg-cp on"><span class="row"><span><b>1 month</b><small>Pingo Pro</small></span><span>17,99 €</span></span></div>
+    <div class="pg-cmp">
+      <div class="r h"><span></span><b class="hi">1 month</b><b>12 months</b></div>
+      <div class="r"><span>Pay today</span><b class="hi">17,99 €</b><b>0 €</b></div>
+      <div class="r"><span>Then</span><b class="hi">17,99 € / mo</b><b>89,99 € / yr</b></div>
+      <div class="r"><span>You commit to</span><b class="hi">One month</b><b>One year</b></div>
+      <div class="r"><span>Pingo Pro</span><b class="hi">Everything</b><b>Everything</b></div>
+    </div>
+    <div style="height:8px"></div>
+  </div>
+  <div class="scr-foot">
+    <p class="pg-check"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 6"/></svg>No commitment, cancel any time</p>
+    <button class="pg-btn" id="offerCta">Continue — 17,99 €</button>
+    <button class="pg-link" id="offerBack">Back to the free week</button>
+  </div>
+</section>
+
+<!-- ACCOUNT -->
+<section class="scr warm" data-id="account">
+  <div class="scr-top">
+    <div class="pg-nav"><span class="pg-circ ghost"></span><svg class="pg-mark" viewBox="0 0 100 50"></svg><span class="pg-circ ghost"></span></div>
+  </div>
+  <div class="scr-body dock">
+    <div style="margin-top:auto"></div>
+    <h2 class="pg-acc-h">Create an account</h2>
+    <p class="pg-acc-s" id="accS"></p>
+    <button class="pg-sso" data-go="home"><svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Sign in with Google</button>
+    <button class="pg-sso apple" data-go="home"><svg viewBox="0 0 24 24"><path fill="#fff" d="M16.4 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.8-1.7 0-3.3 1-4.1 2.5-1.8 3.1-.5 7.6 1.3 10.1.8 1.2 1.8 2.6 3.1 2.5 1.3-.1 1.7-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.2-1.2 3-2.5 1-1.4 1.4-2.8 1.4-2.8 0-.1-2.7-1.1-2.7-4.1zM14 5.2c.7-.8 1.2-2 1-3.2-1 .1-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3.1 1.1.1 2.2-.6 2.9-1.4z"/></svg>Sign in with Apple</button>
+    <div style="margin-bottom:auto;height:60px"></div>
+  </div>
+  <div class="scr-foot"></div>
+</section>
+
+<!-- HOME -->
+<section class="scr" data-id="home">
+  <div class="pg-hhead">
+    <span class="pg-pill"><span class="flag" id="homeFlag"></span>L1</span>
+    <span class="pg-prog">My progress<br>⌄</span>
+    <span class="pg-pill fl">0 <span class="fire"><svg width="12" height="14" viewBox="0 0 12 14"><path d="M6 0c1 3 5 4.5 5 8.5A5 5 0 0 1 1 8.5C1 6 3 5 3 3c1.5 1 2.2 2.2 2 3.6C6.6 5.6 6.7 2.6 6 0Z" fill="#fff"/></svg></span></span>
+  </div>
+  <div class="scr-body"><div class="pg-hmain"><svg class="pg-mark" viewBox="0 0 100 50"></svg><small>Meet someone new</small><h2>Start with a greeting</h2><button class="pg-start">Start</button></div></div>
+  <div class="pg-hfoot">⌃<br>My plan</div>
+</section>
+
+        </div>
+      </div>
+    </div>
+    <div class="demo-cap hidden" id="demoCap"><div class="bar"><i id="demoProg"></i></div><p id="demoTxt"></p><button id="demoStop">Stop</button></div>
+    <div class="chips" id="chips"></div>
+    <p class="chiphint">Jump to any screen — answers already filled in.</p>
+    <div class="qr"><img src="img/qr.svg" alt="QR code for this prototype"><span><b>Open it on your phone</b>Scan to try the flow in your hand.</span></div>
+  </div>
+  <div class="panelcol"><div class="pn" id="panel"></div></div>
+</div>
+</div><!-- /view-proto -->
+
+<script>
+/* ================= content (from Pingo's own screens, listing and site) ================= */
+var LANGS = [
+  {k:'en',n:'English'},{k:'es',n:'Spanish'},{k:'fr',n:'French'},{k:'de',n:'German'},{k:'ja',n:'Japanese'},
+  {k:'ko',n:'Korean'},{k:'it',n:'Italian'},{k:'zh',n:'Chinese'},{k:'pt',n:'Portuguese'}
+];
+var LANG = {}; LANGS.forEach(function(l){ LANG[l.k]=l; });
+function flagSVG(k){
+  var s='<svg viewBox="0 0 36 36">', b='';
+  switch(k){
+    case 'en': b='<rect width="36" height="36" fill="#fff"/>'+[0,2,4,6,8,10,12].map(function(i){return '<rect y="'+(i*2.77)+'" width="36" height="2.77" fill="#D22F27"/>';}).join('')+'<rect width="17" height="19.4" fill="#1E50A0"/><g fill="#fff">'+[[3,3],[8,3],[13,3],[5.5,7],[10.5,7],[3,11],[8,11],[13,11],[5.5,15],[10.5,15]].map(function(p){return '<circle cx="'+p[0]+'" cy="'+p[1]+'" r=".9"/>';}).join('')+'</g>'; break;
+    case 'es': b='<rect width="36" height="36" fill="#C60B1E"/><rect y="9" width="36" height="18" fill="#FFC400"/>'; break;
+    case 'fr': b='<rect width="12" height="36" fill="#0055A4"/><rect x="12" width="12" height="36" fill="#fff"/><rect x="24" width="12" height="36" fill="#EF4135"/>'; break;
+    case 'de': b='<rect width="36" height="12" fill="#1A1A1A"/><rect y="12" width="36" height="12" fill="#DD0000"/><rect y="24" width="36" height="12" fill="#FFCE00"/>'; break;
+    case 'ja': b='<rect width="36" height="36" fill="#F5F3F0"/><circle cx="18" cy="18" r="7.5" fill="#BC002D"/>'; break;
+    case 'ko': b='<rect width="36" height="36" fill="#F5F3F0"/><path d="M11 18a7 7 0 0 1 14 0Z" fill="#CD2E3A"/><path d="M11 18a7 7 0 0 0 14 0Z" fill="#0047A0"/><g stroke="#1A1A1A" stroke-width="1.6"><path d="M5 9l4-3M6 11l4-3M27 6l4 3M26 8l4 3M5 27l4 3M6 25l4 3M27 30l4-3M26 28l4-3"/></g>'; break;
+    case 'it': b='<rect width="12" height="36" fill="#009246"/><rect x="12" width="12" height="36" fill="#fff"/><rect x="24" width="12" height="36" fill="#CE2B37"/>'; break;
+    case 'zh': b='<rect width="36" height="36" fill="#DE2910"/><path d="M10 6l1.8 5.4h5.6l-4.6 3.3 1.8 5.4-4.6-3.4-4.6 3.4 1.8-5.4-4.6-3.3h5.6Z" fill="#FFDE00"/>'; break;
+    case 'pt': b='<rect width="36" height="36" fill="#009C3B"/><path d="M18 6l14 12-14 12L4 18Z" fill="#FFDF00"/><circle cx="18" cy="18" r="6.5" fill="#002776"/>'; break;
+  }
+  return s+b+'</svg>';
+}
+var GOALS = [
+  {k:'talk',  r:'Talk better',            hd:'{n}, learn to <em>talk better</em> in {l}', ld:'Aim: talk better',           c2h:'Built to get you talking', c2p:'Every conversation is aimed at speaking more and sounding more natural, with feedback as you go.'},
+  {k:'trip',  r:'Get ready for a trip',   hd:'{n}, get <em>trip-ready</em> in {l}',       ld:'Aim: get ready for a trip',  c2h:'Built for your trip',      c2p:'You will practise the moments you will actually have: directions, ordering, small talk.'},
+  {k:'work',  r:'Nail a job interview',   hd:'{n}, ace your <em>interview</em> in {l}',    ld:'Aim: nail a job interview',  c2h:'Built for the interview',  c2p:'Pingo plays the interviewer, so you practise introducing yourself before it counts.'},
+  {k:'hobby', r:'Chat about my hobbies',  hd:'{n}, talk about <em>what you love</em> in {l}', ld:'Aim: chat about hobbies', c2h:'Built around what you love', c2p:'Talk about the things you care about, and learn the words you will actually use.'}
+];
+var GOAL = {}; GOALS.forEach(function(g){ GOAL[g.k]=g; });
+var LEVELS = [
+  {k:'none', r:'None yet',    ld:'Starting from hello',                        c1h:'Start from hello', c1p:'We will begin with greetings, your name and numbers, one short conversation at a time.'},
+  {k:'bit',  r:'A bit',       ld:'Already knows greetings and numbers',        c1h:'Start with the basics', c1p:'You already know some greetings and numbers, so we’ll build from there.'},
+  {k:'more', r:'Quite a lot', ld:'Ready for real conversations',               c1h:'Start a step up', c1p:'You can already get by, so we will skip the basics and go straight to real conversations.'}
+];
+var LEVEL = {}; LEVELS.forEach(function(l){ LEVEL[l.k]=l; });
+var QUOTES = [
+  ['I’ve only had it for an hour and I’ve already spoken more than I have in a year with Duolingo.','Logan Armitage · Google Play'],
+  ['How I went from A2 to B1. Pingo helped me break past a 6-month plateau in French.','vickys12301 · App Store'],
+  ['Only 34 days in, and it’s increased my speaking ability and confidence in ways I couldn’t have imagined.','LeoSk8 · App Store']
+];
+var MARK='<rect x="1" y="9" width="19" height="32" rx="9.5" fill="#0160FF"/><rect x="24" y="2" width="19" height="46" rx="9.5" fill="#F8D940"/><rect x="47" y="2" width="19" height="46" rx="9.5" fill="#F14C76"/><circle cx="83" cy="25" r="10" fill="#0160FF"/>';
+document.querySelectorAll('svg.pg-mark').forEach(function(s){ s.innerHTML=MARK; });
+
+/* ================= state ================= */
+function defaults(){ return { theme:S0.theme, lang:'es', name:'Sam', goal:'talk', level:'bit', chat:3, plan:'year' }; }
+var S0 = {theme:'light'};
+var S = defaults();
+function fill(s,v){ Object.keys(v).forEach(function(x){ s=s.split('{'+x+'}').join(v[x]); }); return s; }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function nm(){ return esc((S.name||'').trim() || 'there'); }
+function ln(){ return LANG[S.lang].n; }
+
+/* ================= builders ================= */
+var tk='<svg class="tk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 6"/></svg>';
+function buildLangs(){ var g=document.getElementById('langList'); g.innerHTML='';
+  LANGS.forEach(function(l){ var b=document.createElement('button'); b.className='pg-lrow'; b.dataset.v=l.k;
+    b.innerHTML='<span class="flag">'+flagSVG(l.k)+'</span><span>'+l.n+'</span>'+tk;
+    b.addEventListener('click',function(){ S.lang=l.k; syncScreen(); }); g.appendChild(b); }); }
+
+/* the chat: Pingo's three questions, replies as tappable bubbles */
+function chatQ(i){
+  if(i===0) return nm()+', what are you hoping to do with '+ln()+'?';
+  if(i===1) return 'Got it — how much '+ln()+' do you already know?';
+  return 'Great — let’s pin it down. Do you know a few basics, like greetings and numbers, or something more?';
+}
+function chatA(i){
+  if(i===0) return GOAL[S.goal].r;
+  if(i===1) return LEVEL[S.level].r;
+  return S.level==='more' ? 'Something more' : (S.level==='none' ? 'Not yet' : 'Yes, the basics');
+}
+function renderChat(){
+  var log=document.getElementById('chatLog'), h='';
+  h+='<div class="pg-bub p">¡Hola! Welcome, I’m Pingo! Let’s get started! What’s your name?<small>Pingo</small></div>';
+  h+='<div class="pg-bub u">'+nm()+'</div>';
+  for(var i=0;i<3;i++){
+    if(i>S.chat) break;
+    h+='<div class="pg-bub p">'+chatQ(i)+'<small>Pingo</small></div>';
+    if(i<S.chat) h+='<div class="pg-bub u">'+esc(chatA(i))+'</div>';
+  }
+  if(S.chat>=3) h+='<div class="pg-bub p">That’s a great starting point — we’re all set to begin!<small>Pingo</small></div>';
+  var prevN=log.children.length; log.innerHTML=h;
+  [].slice.call(log.children).forEach(function(b,n){ if(n>=prevN && prevN>0) b.classList.add('new'); });
+  var rp=document.getElementById('chatReplies'), opts=[];
+  if(S.chat===0) opts=GOALS.map(function(g){ return {t:g.r,f:function(){ S.goal=g.k; }}; });
+  if(S.chat===1) opts=LEVELS.map(function(l){ return {t:l.r,f:function(){ S.level=l.k; }}; });
+  if(S.chat===2) opts=[{t:chatA(2),f:function(){}}];
+  rp.innerHTML='';
+  opts.forEach(function(o,n){ var b=document.createElement('button'); b.className='pg-reply'; b.textContent=o.t; b.dataset.n=n;
+    b.addEventListener('click',function(){ o.f(); S.chat++; syncScreen(); }); rp.appendChild(b); });
+  var done=S.chat>=3;
+  rp.classList.toggle('hidden',done); document.getElementById('chatBar').classList.toggle('hidden',done);
+  document.getElementById('chatBtn').classList.toggle('hidden',!done);
+  var cb=document.getElementById('chatBody'); requestAnimationFrame(function(){ cb.scrollTop=cb.scrollHeight; });
+}
+
+/* ================= everything downstream reads S ================= */
+function syncScreen(){
+  document.querySelectorAll('#langList .pg-lrow').forEach(function(b){ b.classList.toggle('on', b.dataset.v===S.lang); });
+  var ni=document.getElementById('nameIn'); if(document.activeElement!==ni) ni.value=S.name;
+  document.getElementById('nameBtn').disabled=!S.name.trim();
+  renderChat();
+  var g=GOAL[S.goal], lv=LEVEL[S.level];
+  document.getElementById('loadH').textContent='Building '+(S.name.trim()||'your')+(S.name.trim()?'’s ':' ')+ln()+' plan…';
+  var st=document.querySelectorAll('#loadSteps .t');
+  st[0].textContent=ln()+' · '+g.ld; st[1].textContent=lv.ld; st[2].textContent='First chapter: Meet someone new';
+  document.getElementById('pc1h').textContent=lv.c1h; document.getElementById('pc1p').textContent=lv.c1p;
+  document.getElementById('pc2h').textContent=g.c2h; document.getElementById('pc2p').textContent=g.c2p;
+  document.getElementById('payH').innerHTML=fill(g.hd,{n:nm(),l:ln()});
+  document.querySelectorAll('[data-plan]').forEach(function(b){ b.classList.toggle('on', b.dataset.plan===S.plan); });
+  document.getElementById('plansCta').textContent = S.plan==='year' ? 'Start My Free Week' : 'Continue';
+  document.getElementById('offH').innerHTML='Not ready for a full year, '+nm()+'?';
+  document.getElementById('accS').textContent='Save '+(S.name.trim()?S.name.trim()+'’s ':'your ')+ln()+' plan and pick up where you left off.';
+  document.getElementById('homeFlag').innerHTML=flagSVG(S.lang);
+}
+
+/* ================= router ================= */
+var ORDER=['welcome','lang','name','chat','loader','plan','paywall','plans','offer','account','home'];
+var LABEL={welcome:'Welcome',lang:'Language',name:'Name',chat:'Chat with Pingo',loader:'Loader',plan:'Your plan',paywall:'Paywall',plans:'All plans',offer:'Offer on close',account:'Account (moved)',home:'Home'};
+var scr={}, hist=[], cur='welcome', loadTimers=[];
+document.querySelectorAll('.scr').forEach(function(s){ scr[s.dataset.id]=s; });
+
+function chrome(){ var dark=S.theme==='dark';
+  document.getElementById('sbar').classList.toggle('light',dark); document.getElementById('homebar').classList.toggle('light',dark); }
+function enter(id){ chrome(); paintChips(); paintPanel(); clearLoad();
+  if(id==='loader') runLoader(); if(id==='plan') setCard(0,true); if(id==='chat') renderChat(); }
+function go(id,opts){
+  opts=opts||{}; if(id===cur) return;
+  var from=scr[cur], to=scr[id], toSheet=to.classList.contains('sheet');
+  if(!opts.back) hist.push(cur);
+  Object.keys(scr).forEach(function(k){ var s=scr[k];
+    if(k!==id && s.classList.contains('is-active')){ s.classList.remove('is-active');
+      if(!toSheet && !s.classList.contains('sheet')) s.classList.add('is-past'); } });
+  if(toSheet){ from.classList.remove('is-past'); from.classList.add('is-active'); }
+  to.classList.remove('is-past'); to.classList.add('is-active');
+  cur=id; enter(id);
+}
+function back(){
+  if(!hist.length) return;
+  var prev=hist.pop();
+  scr[cur].classList.remove('is-active');
+  scr[prev].classList.remove('is-past'); scr[prev].classList.add('is-active');
+  if(scr[prev].classList.contains('sheet')){ scr.paywall.classList.remove('is-past'); scr.paywall.classList.add('is-active'); }
+  cur=prev; enter(prev);
+}
+function jump(id){
+  var i=ORDER.indexOf(id);
+  Object.keys(scr).forEach(function(k){ scr[k].classList.add('nofx'); scr[k].classList.remove('is-active','is-past'); });
+  hist=ORDER.slice(0,i<0?0:i);
+  if(id==='offer'){ scr.paywall.classList.add('is-active'); hist=ORDER.slice(0,ORDER.indexOf('paywall')+1); }
+  if(id==='account'||id==='home') hist=ORDER.slice(0,ORDER.indexOf('paywall')+1).concat(id==='home'?['account']:[]);
+  if(['chat','loader','plan','paywall','plans','offer','account','home'].indexOf(id)>-1 && S.chat<3) S.chat=3;
+  scr[id].classList.add('is-active'); cur=id;
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){
+    Object.keys(scr).forEach(function(k){ scr[k].classList.remove('nofx'); }); }); });
+  syncScreen(); enter(id);
+}
+var chipsBuilt=false;
+function paintChips(){
+  var c=document.getElementById('chips');
+  if(!chipsBuilt){ chipsBuilt=true;
+    ORDER.forEach(function(id){
+      var b=document.createElement('button'); b.className='chip'+(id==='offer'?' offer':''); b.textContent=LABEL[id];
+      b.dataset.id=id; b.onclick=function(){ stopDemo(); jump(id); }; c.appendChild(b);
+    });
+  }
+  c.querySelectorAll('.chip').forEach(function(b){ b.classList.toggle('on', b.dataset.id===cur); });
+}
+
+function clearLoad(){ loadTimers.forEach(clearTimeout); loadTimers=[]; }
+function runLoader(){
+  var k=demo.on?0.48:1;
+  var steps=[].slice.call(document.querySelectorAll('#loadSteps .pg-ls'));
+  steps.forEach(function(s){ s.classList.remove('on'); });
+  function showQuote(i){
+    document.getElementById('qText').textContent='“'+QUOTES[i][0]+'”';
+    document.getElementById('qWho').textContent=QUOTES[i][1];
+    document.querySelectorAll('#qDots i').forEach(function(d,n){ d.classList.toggle('on',n===i); });
+  }
+  showQuote(0);
+  steps.forEach(function(s,i){ loadTimers.push(setTimeout(function(){ s.classList.add('on'); },(700+i*1000)*k)); });
+  [1,2].forEach(function(i){ loadTimers.push(setTimeout(function(){ showQuote(i); },(1500+(i-1)*1600)*k)); });
+  loadTimers.push(setTimeout(function(){ if(cur==='loader') go('plan'); },5000*k));
+}
+
+/* plan carousel */
+var car=document.getElementById('car'), carT=null;
+function setCard(i,instant){ var cards=car.querySelectorAll('.pg-pc'), c=cards[i];
+  var x=c.offsetLeft-(car.clientWidth-c.offsetWidth)/2;
+  if(instant) car.scrollLeft=x; else car.scrollTo({left:x,behavior:'smooth'}); paintDots(i); }
+function paintDots(i){ document.querySelectorAll('#carDots i').forEach(function(d,n){ d.classList.toggle('on',n===i); }); }
+car.addEventListener('scroll',function(){ clearTimeout(carT); carT=setTimeout(function(){
+  var cards=car.querySelectorAll('.pg-pc'), mid=car.scrollLeft+car.clientWidth/2, best=0, bd=1e9;
+  cards.forEach(function(c,n){ var d=Math.abs(c.offsetLeft+c.offsetWidth/2-mid); if(d<bd){bd=d;best=n;} }); paintDots(best); },60); });
+document.querySelectorAll('#carDots i').forEach(function(d,n){ d.addEventListener('click',function(){ setCard(n); }); });
+
+/* ================= wiring ================= */
+document.querySelectorAll('[data-go]').forEach(function(b){ b.addEventListener('click',function(){ if(!b.disabled) go(b.dataset.go); }); });
+document.querySelectorAll('[data-back]').forEach(function(b){ b.addEventListener('click',back); });
+document.getElementById('nameIn').addEventListener('input',function(e){ S.name=e.target.value; S.chat=Math.min(S.chat,3); syncScreen(); });
+document.getElementById('chatBtn').addEventListener('click',function(){});
+document.querySelector('[data-id=name] .pg-btn').addEventListener('click',function(){ S.chat=0; renderChat(); });
+document.querySelectorAll('[data-plan]').forEach(function(b){ b.addEventListener('click',function(){ S.plan=b.dataset.plan; syncScreen(); }); });
+document.getElementById('payClose').addEventListener('click',function(){ go('offer'); });
+document.getElementById('payCta').addEventListener('click',function(){ go('account'); });
+document.getElementById('plansCta').addEventListener('click',function(){ go('account'); });
+document.getElementById('offerCta').addEventListener('click',function(){ go('account'); });
+document.getElementById('offClose').addEventListener('click',function(){ go('account'); });
+document.getElementById('offerBack').addEventListener('click',function(){ back(); });
+
+function setSeg(id,attr,val){ document.querySelectorAll('#'+id+' button').forEach(function(b){ b.classList.toggle('on', b.dataset[attr]===val); }); }
+function setTheme(th){ S.theme=th; S0.theme=th; document.getElementById('phoneIn').classList.toggle('dark',th==='dark'); setSeg('segTheme','theme',th); chrome(); }
+document.querySelectorAll('#segTheme button').forEach(function(b){ b.addEventListener('click',function(){ setTheme(b.dataset.theme); }); });
+
+/* ================= the 30-second walkthrough ================= */
+var demo={tok:0,on:false,t0:0,iv:null}, finger=document.getElementById('finger'), phoneIn=document.getElementById('phoneIn');
+function W(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+function cap(txt){ document.getElementById('demoTxt').textContent=txt; }
+async function tap(sel,tok){
+  if(demo.tok!==tok) throw 0;
+  var el=typeof sel==='string'?document.querySelector(sel):sel; if(!el) return;
+  var r=el.getBoundingClientRect(), p=phoneIn.getBoundingClientRect(), z=p.width/phoneIn.offsetWidth||1;
+  finger.style.left=((r.left-p.left+r.width/2)/z)+'px'; finger.style.top=((r.top-p.top+r.height/2)/z)+'px';
+  finger.classList.add('show'); await W(380); if(demo.tok!==tok) throw 0;
+  finger.classList.add('press'); await W(120); finger.classList.remove('press'); el.click(); await W(160);
+  if(demo.tok!==tok) throw 0;
+}
+async function pause(ms,tok){ await W(ms); if(demo.tok!==tok) throw 0; }
+function replyBtn(txt){ return [].slice.call(document.querySelectorAll('#chatReplies .pg-reply')).filter(function(b){ return b.textContent===txt; })[0]; }
+function startDemo(){
+  stopDemo(); var tok=++demo.tok; demo.on=true; demo.t0=Date.now();
+  var keep=S.theme; S=defaults(); S.theme=keep; S.name=''; S.chat=0;
+  jump('welcome');
+  document.getElementById('demoCap').classList.remove('hidden');
+  demo.iv=setInterval(function(){ document.getElementById('demoProg').style.width=Math.min(100,(Date.now()-demo.t0)/290)+'%'; },200);
+  (async function(){
+    try{
+      cap('Your welcome, untouched. Pingo says hello.'); await pause(1200,tok);
+      await tap('#welNext',tok);
+      cap('Your language list, your flags.'); await pause(500,tok);
+      await tap('#langList [data-v=fr]',tok); await pause(300,tok); await tap('#langList [data-v=es]',tok); await pause(250,tok);
+      await tap('[data-id=lang] .pg-btn',tok);
+      cap('Their name. Everything after this uses it.'); await pause(400,tok);
+      var ni=document.getElementById('nameIn'), nmS='Sam';
+      for(var c=1;c<=nmS.length;c++){ S.name=nmS.slice(0,c); ni.value=S.name; syncScreen(); await pause(140,tok); }
+      await tap('#nameBtn',tok);
+      cap('Pingo’s own questions: what they want, how much they know.'); await pause(700,tok);
+      await tap(replyBtn('Talk better'),tok); await pause(450,tok);
+      await tap(replyBtn('A bit'),tok); await pause(450,tok);
+      await tap(replyBtn('Yes, the basics'),tok); await pause(450,tok);
+      await tap('#chatBtn',tok);
+      cap('Idea 5 — the loader reads their answers back.'); await pause(2500,tok);
+      cap('Their plan, built from those answers. Sign-in no longer sits here.'); await pause(700,tok);
+      setCard(1); await pause(800,tok); setCard(2); await pause(900,tok);
+      await tap('[data-id=plan] .pg-btn',tok);
+      cap('Ideas 3 and 4 — their goal in the headline, price and your 4.8 on one screen.'); await pause(1900,tok);
+      var pb=scr.paywall.querySelector('.scr-body'); pb.scrollTo({top:pb.scrollHeight,behavior:'smooth'}); await pause(900,tok);
+      pb.scrollTo({top:0,behavior:'smooth'}); await pause(400,tok);
+      cap('Idea 1 — they close it, and get one month instead of nothing.'); await tap('#payClose',tok); await pause(2400,tok);
+      cap('That is the flow. Account comes next, after the decision — idea 2.');
+      finger.classList.remove('show'); await pause(2200,tok); stopDemo();
+    }catch(e){}
+  })();
+}
+function stopDemo(){ if(!demo.on) return; demo.tok++; demo.on=false; clearInterval(demo.iv); finger.classList.remove('show','press');
+  document.getElementById('demoCap').classList.add('hidden'); }
+document.getElementById('demoBtn').addEventListener('click',startDemo);
+document.getElementById('demoStop').addEventListener('click',stopDemo);
+phoneIn.addEventListener('pointerdown',function(e){ if(e.isTrusted && demo.on) stopDemo(); });
+</script>
+<script>
+/* ---- the short panel: hypothesis + potential outcome, nothing else ---- */
+var PANEL = {
+welcome:{ctx:true,t:'Your new language BFF',
+ kept:'Your splash as it ships: the four-bar mark, the line of copy, the round blue next button and “Already have an account?”.'},
+lang:{ctx:true,t:'Which language do you want to learn?',
+ kept:'Untouched — your flag rows, the white lifted card and blue check on the one picked, your order. The choice now carries through to the loader, the plan, the paywall and the home flag.'},
+name:{ctx:true,t:'What’s your name?',
+ kept:'Untouched — your input pill, Continue and both disclosure lines. Their name is what the chat, the loader and the paywall headline use.'},
+chat:{ctx:true,t:'Pingo’s first conversation',
+ kept:'Every question Pingo asks today, in your bubbles: what they hope to do, how much they know, whether they have the basics. In the app they answer by voice or by typing; here the answers are tappable replies so the prototype clicks through. Try another goal and watch the paywall change.'},
+loader:{n:5,t:'Let the loader read their answers back',
+ hyp:'Try spending the seconds before the plan on what Pingo just heard, <b>because today a grey skeleton fills that moment and the answers are never said back</b>. The three quotes are from your own website.',
+ kept:'Your four-bar mark (animated), your bubble colour for the quote card, your blue checks.',
+ out:'CR +10–15%'},
+plan:{n:5,t:'Let the loader read their answers back',
+ hyp:'Try turning your “Start with the basics” card into three — their level, their goal, their first chapter — <b>because your plan already reacts to their answers; it just shows one card of it</b>. Today “Create an account” comes straight after this; it now waits until after the paywall.',
+ kept:'Your carousel card, the three-dot illustration, the pager dots, “Start learning”. Chapter objectives are taken from your own chapter screen.',
+ out:'CR +10–15%'},
+paywall:{n:3,t:'Put their goal in the paywall headline',
+ hyp:'Try naming the person, the language and the goal in your headline, <b>because Pingo has all three by now and today’s paywall says “Learn to speak a new language with Pingo” to everyone</b>. Go back to the chat and pick “Get ready for a trip” — the headline follows.',
+ n2:4, hyp2:'Try one paywall screen instead of three, <b>because today the price, “8 million learners” and your 4.8 from 92k+ reviews only arrive on the third screen</b>, after features and the trial reminder. Everything here is from those three screens.',
+ out2:'CR +10–15%',
+ kept:'Your blue word-highlight headline, the plan card with its “7 days free” band, the bell, your four feature lines and icons, the laurels, the California quote, “No payment due now”, Start My Free Week and View All Plans.',
+ out:'CR +15–20%'},
+plans:{ctx:true,t:'Choose a plan',
+ kept:'Your View All Plans screen: “7-day Free Trial” and “No Free Trial” sections, the Most Popular card, 89,99 € a year or 17,99 € a month. One thing left out: in our capture the year showed “RSD161.99” struck through above 89,99 €. Mixing currencies in a strikethrough reads like a bug, so check it.'},
+offer:{n:1,t:'Offer one month when they close the paywall',
+ hyp:'Try showing your one-month plan when someone closes the paywall, <b>because today the X goes straight to home and the 17,99 € month you already sell is only visible behind View All Plans</b>. No trial and no year, so it asks for less than the screen they just turned down. Nothing is discounted or invented.',
+ kept:'Your Choose a plan card and “No Free Trial” label, your blue selected border, “No commitment, cancel any time” and your button. Store prices as published.',
+ out:'ARPU +10–15%'},
+account:{n:2,t:'Ask for an account after the paywall',
+ hyp:'Try asking for Google or Apple sign-in after the paywall, <b>because today it sits between “Start with the basics” and the price, right after their first conversation with Pingo</b>. Buyers and people who close both land here, so nobody skips it.',
+ kept:'Your Create an account screen: warm background, the Google and Apple buttons. One added line tells them what the account saves.',
+ out:'CR +8% · ARPU +17%'},
+home:{ctx:true,t:'Start with a greeting',
+ kept:'Where the flow hands over to the app. Your home screen, with the flag of the language they picked and the chapter their plan opened on.'}
+};
+
+function outBlock(lab,val){
+  return '<div class="pn-out"><div class="lab">'+lab+'</div><div class="v">'+val+'</div></div>';
+}
+function paintPanel(){
+  var d=PANEL[cur]; if(!d) return;
+  var h='';
+  if(d.ctx){
+    h += '<div class="pn-n ctx">Context · no change proposed</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<div class="pn-kept">'+d.kept+'</div>';
+  } else {
+    h += '<div class="pn-n">Idea '+d.n+' of 5</div><h3 class="pn-t">'+d.t+'</h3>'
+       + '<p class="pn-hyp">'+d.hyp+'</p>'
+       + outBlock('Potential outcome · based on Adapty data', d.out);
+    if(d.hyp2){
+      h += '<div class="pn-sep"></div>'
+         + '<div class="pn-n">Idea '+d.n2+' of 5</div>'
+         + '<p class="pn-hyp" style="margin-top:12px">'+d.hyp2+'</p>'
+         + outBlock('Potential outcome · based on Adapty data', d.out2);
+    }
+    h += '<div class="pn-kept"><b>Your design, unchanged.</b> '+d.kept+'</div>';
+  }
+  h += '<div class="pn-foot">Ranges are Adapty’s expected effect from tests across 30,000+ subscription apps — not measured lift for Pingo AI. '
+     + 'Prices, ratings, quotes and feature lines come from your own published material.</div>';
+  document.getElementById('panel').innerHTML = h;
+}
+
+/* ---- views, jumps from the overview ---- */
+function showView(v){
+  if(v!=='proto') stopDemo();
+  document.querySelectorAll('.view').forEach(function(x){ x.classList.remove('on'); });
+  document.getElementById('view-'+v).classList.add('on');
+  document.querySelectorAll('.nav-links button[data-view]').forEach(function(b){ b.classList.toggle('on', b.dataset.view===v); });
+  window.scrollTo(0,0);
+  if(v==='proto' && cur==='plan') requestAnimationFrame(function(){ setCard(0,true); });
+}
+document.querySelectorAll('[data-view]').forEach(function(b){ b.addEventListener('click',function(){ showView(b.dataset.view); }); });
+document.querySelectorAll('.idea[data-jump]').forEach(function(b){
+  b.addEventListener('click',function(){ showView('proto'); jump(b.dataset.jump); });
+});
+document.querySelectorAll('[data-demo]').forEach(function(b){ b.addEventListener('click',function(){ showView('proto'); startDemo(); }); });
+
+buildLangs();
+scr.welcome.classList.add('is-active');
+syncScreen(); chrome(); paintChips(); paintPanel();
+if(/[?&]open=proto/.test(location.search)) showView('proto');
+</script>
+</body>
+</html>
